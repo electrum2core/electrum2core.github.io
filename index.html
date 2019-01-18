@@ -1,0 +1,202 @@
+<!--
+
+MIT License
+
+Copyright (c) 2019 cryptapus <info@cryptapus.org>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<title>electrum2core</title>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href=".">electrum2core</a>
+</div>
+
+<div class="collapse navbar-collapse" id="myNavbar">
+</div>
+</div>
+</nav>
+
+<div class="jumbotron text-center">
+
+<h1>electrum2core</h1>
+
+<p><b>electrum2core</b> is a client-side Electrum to Bitcoin-core script generator.<br/><b>It is meant to be run on your own machine and not while connected to the network.</b><br/>This is to ensure no private keys are leaked during the process.</p>
+
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+
+<h3>Instructions</h3>
+
+<p>These are instructions on how to use this tool.</p>
+
+<h3>1. Install Bitcoin-core</h3>
+
+<p>Install Bitcoin-core and let it syncronise with the network.</p>
+
+<h3>2. Disconnect Your Host From the Network</h3>
+
+<p>This is to ensure that no private keys in the later steps are vulnerable.</p>
+
+<h3>3. Export Private Keys from Electrum</h3>
+
+<p>In Electrum, go to <code>Wallet -&gt; Private Keys -&gt; Export</code>. Export your wallet in <code>CSV</code> format (Electrum may need to work for some time).</p>
+
+<h3>4. Choose Your Environment</h3>
+
+<p>Choose your environment below. If you want just the commands to enter into Bitcoin-core choose <b>Manual</b>. Otherwise a script is generated.</p>
+
+<h3>5. Select Your Export File (CSV)</h3>
+
+<p>It is the <code>.csv</code> file you exported from Electrum.</p>
+
+<h3>6. Import keys into Bitcoin-core</h3>
+
+<p>There are a few methods depending on your choice of environment. This process may take some time to complete as it will rescan the blockchain looking for utxo's at these addresses.</p>
+
+<h4>6.1 Manual Import</h4>
+
+<p>Copy/Paste each line <b>in order</b> from the list below into the <code>bitcoin-qt</code> debug window. Note that each line ends in <code>false</code>. this is to ensure that the rescan is delayed until we are ready to begin. The last line includes a <code>true</code> flag which will begin the rescan process.</p>
+
+<h4>6.2 Mac/Linux Import</h4>
+
+<p>Copy/Paste the text below into a text file (example: <code>script.txt</code>). You should be able to run the script with <code>bash script.txt</code> in a terminal.</p>
+
+<h4>6.3 Windows Import</h4>
+
+<p>Copy/Paste the text below into a text file (example: <code>script.bat</code>). You should be able to run the script by double-clicking on it.</p>
+
+<h3>7. Destroy script files and close this page.</h3>
+
+<p>It is important now that you destroy the output <code>.csv</code> from Electrum and any script files that you have created. I would recommend <code>shred</code> on Mac/Linux hosts. Once you have closed this page it should be safe to reconnect to the network.</p>
+
+</div>
+</div>
+</div>
+
+<hr/>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+
+<h3>Script Input</h3>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="script_type" id="manual" value="option1" checked>
+  <label class="form-check-label" for="manual">Manual</label>
+  <input class="form-check-input" type="radio" name="script_type" id="unix" value="option2">
+  <label class="form-check-label" for="unix">Mac/Linux</label>
+  <input class="form-check-input" type="radio" name="script_type" id="win" value="option3">
+  <label class="form-check-label" for="unix">Windows</label>
+  <small id="radio" class="form-text text-muted">Choose your environment.</small>
+</div>
+
+<div class="form-group">
+  <label for="cli_path">Path to bitcoin-cli</label>
+  <input type="text" class="form-control" id="cli_path" aria-describedby="cli_path" placeholder="Example: &quot;C:/path/to/bitcoin-cli.exe&quot; for Windows or &quot;/usr/local/bin/bitcoin-cli&quot; for Mac/Linux">
+  <small id="cli_path" class="form-text text-muted">Use this to set the path.</small>
+</div>
+
+<div class="form-group">
+<input type="file" name="file" id="file"><a href="./">Reset</a>
+</div>
+
+<hr/>
+
+<h3>Script Output</h3>
+
+<pre><div id="tit"></div></pre>
+
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <span class="text-muted"><a href="https://github.com/electrum2core/electrum2core.github.io" target="_blank">electrum2core on github</a></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('file').onchange = function(){
+  var file = this.files[0];var file = this.files[0];
+  var reader = new FileReader();
+  var script_type_manual = document.getElementById("manual").checked;
+  var script_type_unix = document.getElementById("unix").checked;
+  var script_type_windows = document.getElementById("win").checked;
+  var script_cli_path = document.getElementById("cli_path").value;
+  var script_type = "none"
+  if (script_type_manual) {
+    script_type = "manual"
+  }
+  if (script_type_unix) {
+    script_type = "unix"
+    var element = document.createElement("div");
+    element.innerHTML = "#!/bin/bash"
+    $("#tit").append(element);
+  }
+  if (script_type_windows) {
+    script_type = "windows"
+  }
+  reader.onload = function(progressEvent){
+    // Entire file
+    //console.log(this.result);
+    // By lines
+    var lines = this.result.split('\n');
+    for(var line = 1; line < lines.length-1; line++){
+      //console.log(lines[line]);
+      // now print in "tit"
+      var element = document.createElement("div");
+      var rescan = "false";
+      var script_cli = "";
+      if (script_type=="unix" || script_type=="windows") script_cli = script_cli_path + " ";
+      if (line==lines.length-2) rescan = "true";
+      element.innerHTML = script_cli + "importprivkey " + lines[line].split(",")[1].slice(0,-1) + " electrum " + rescan;
+      $("#tit").append(element);
+    }
+  };
+  reader.readAsText(file);
+};
+</script>
+
+</body>
+</html>
