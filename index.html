@@ -56,7 +56,7 @@ SOFTWARE.
 
 <h1>electrum2core</h1>
 
-<p><b>electrum2core</b> is a client-side Electrum to Bitcoin-core script generator.<br/><b>It is meant to be run on your own machine and not while connected to the network.</b><br/>This is to ensure no private keys are leaked during the process.</p>
+<p><b>electrum2core</b> is a client-side Electrum to Myriadcoin-core script generator.<br/><b>It is meant to be run on your own machine and not while connected to the network.</b><br/>This is to ensure no private keys are leaked during the process.</p>
 
 </div>
 
@@ -68,9 +68,9 @@ SOFTWARE.
 
 <p>These are instructions on how to use this tool.</p>
 
-<h3>1. Install Bitcoin-core</h3>
+<h3>1. Install Myriadcoin-core</h3>
 
-<p>Install Bitcoin-core and let it syncronise with the network.</p>
+<p>Install Myriadcoin-core and let it syncronise with the network.</p>
 
 <h3>2. Disconnect Your Host From the Network</h3>
 
@@ -82,19 +82,19 @@ SOFTWARE.
 
 <h3>4. Choose Your Environment</h3>
 
-<p>Choose your environment below. If you want just the commands to enter into Bitcoin-core choose <b>Manual</b>. Otherwise a script is generated.</p>
+<p>Choose your environment below. If you want just the commands to enter into Myriadcoin-core choose <b>Manual</b>. Otherwise a script is generated.</p>
 
 <h3>5. Select Your Export File (CSV)</h3>
 
 <p>It is the <code>.csv</code> file you exported from Electrum.</p>
 
-<h3>6. Import keys into Bitcoin-core</h3>
+<h3>6. Import keys into Myriadcoin-core</h3>
 
 <p>There are a few methods depending on your choice of environment. This process may take some time to complete as it will rescan the blockchain looking for utxo's at these addresses.</p>
 
 <h4>6.1 Manual Import</h4>
 
-<p>Copy/Paste each line <b>in order</b> from the list below into the <code>bitcoin-qt</code> debug window. Note that each line ends in <code>false</code>. this is to ensure that the rescan is delayed until we are ready to begin. The last line includes a <code>true</code> flag which will begin the rescan process.</p>
+<p>Copy/Paste each line <b>in order</b> from the list below into the <code>myriadcoin-qt</code> debug window. Note that each line ends in <code>false</code>. this is to ensure that the rescan is delayed until we are ready to begin. The last line includes a <code>true</code> flag which will begin the rescan process.</p>
 
 <h4>6.2 Mac/Linux Import</h4>
 
@@ -131,8 +131,8 @@ SOFTWARE.
 </div>
 
 <div class="form-group">
-  <label for="cli_path">Path to bitcoin-cli</label>
-  <input type="text" class="form-control" id="cli_path" aria-describedby="cli_path" placeholder="Example: &quot;C:/path/to/bitcoin-cli.exe&quot; for Windows or &quot;/usr/local/bin/bitcoin-cli&quot; for Mac/Linux">
+  <label for="cli_path">Path to myriadcoin-cli</label>
+  <input type="text" class="form-control" id="cli_path" aria-describedby="cli_path" placeholder="Example: &quot;C:/path/to/myriadcoin-cli.exe&quot; for Windows or &quot;/usr/local/bin/myriadcoin-cli&quot; for Mac/Linux">
   <small id="cli_path" class="form-text text-muted">Use this to set the path.</small>
 </div>
 
